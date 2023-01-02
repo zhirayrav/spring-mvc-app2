@@ -41,7 +41,7 @@ public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationC
 	        aContext.addFilter("hiddenHttpMethodFilter",
 	                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
 	    }
-	    //russian langusge
+	    //russian language
 	    private void registerCharacterEncodingFilter(ServletContext aContext) {
 	        EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
 

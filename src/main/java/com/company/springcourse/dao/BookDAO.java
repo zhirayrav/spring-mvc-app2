@@ -36,11 +36,6 @@ public class BookDAO {
 	public void delete(int id) {
 		jdbcTemplate.update("delete from book where id=?",id);
 	}
-	public boolean isFree(int id) {
-		Optional<Book> book = jdbcTemplate.query("select id,name,author,year from book where id=? and person_id is null", new BeanPropertyRowMapper<>(Book.class),id)
-		.stream().findAny();
-		return book.isPresent();
-	}
 	public Optional<Person> getBookOwner(int bookId) {
 		return jdbcTemplate.query("select person.* from book join person on book.person_id=person.id where book.id=?", new BeanPropertyRowMapper<>(Person.class),bookId)
 		.stream().findAny();

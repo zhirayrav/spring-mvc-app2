@@ -1,13 +1,18 @@
 package com.company.springcourse.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import org.springframework.stereotype.Component;
-
-@Component
+@Table(name = "Person")
+@Entity
 public class Person {
 	public Person() {}
 	public Person(int id,String name, int age) {
@@ -16,6 +21,9 @@ public class Person {
 		this.name = name;
 		this.age = age;
 	}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
 	@NotEmpty(message="name shoud not be empty")
 	@Size(min=2,max=100,message="name shoud be 2-100 character")
