@@ -22,7 +22,7 @@ public class PeopleService {
 	public List<Person> findAll(){
 		return peopleRepository.findAll();
 	}
-	public Person finfOne(int id) {
+	public Person findOne(int id) {
 		return peopleRepository.findById(id).orElse(null);
 	}
 	@Transactional

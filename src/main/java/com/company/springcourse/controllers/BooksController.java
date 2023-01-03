@@ -28,7 +28,7 @@ public class BooksController {
 	private final PeopleService peopleService;
 	
 	@Autowired
-	public BooksController(BooksService booksService, PeopleService peopleService) {
+	public BooksController(BooksService booksService,PeopleService peopleService) {
 		super();
 		this.booksService = booksService;
 		this.peopleService = peopleService;

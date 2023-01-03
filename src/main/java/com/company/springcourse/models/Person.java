@@ -1,10 +1,13 @@
 package com.company.springcourse.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -27,10 +30,14 @@ public class Person {
 	private int id;
 	@NotEmpty(message="name shoud not be empty")
 	@Size(min=2,max=100,message="name shoud be 2-100 character")
+	@Column(name = "name")
 	private  String name;
 	@Min(value=6,message="age not mapping because <6")
 	@Max(value=150,message="enter real age of person")
+	@Column(name = "age")
 	private int age;
+	@OneToMany(mappedBy = "owner")
+	private List<Book> books;
 	public String getName() {
 		return name;
 	}
@@ -49,5 +56,12 @@ public class Person {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public List<Book> getBooks() {
+		return books;
+	}
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+	
 	
 }

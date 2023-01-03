@@ -36,15 +36,15 @@ public class PeopleController {
 
 	@GetMapping()
 	public String index(Model model) {
-//		model.addAttribute("list",peopleService.findAll());
+		model.addAttribute("list",peopleService.findAll());
 		return "people/indexPerson";
 	}
 	
 		
 	@GetMapping("/{id}")
 	public String show(@PathVariable("id") int id,Model model) {
-		model.addAttribute("person",peopleService.finfOne(id));
-		model.addAttribute("books",booksService.getBooksByPersonId(id));
+		model.addAttribute("person",peopleService.findOne(id));
+		model.addAttribute("books",booksService.getBooksByPersonId(peopleService.findOne(id)));
 		return "people/showPerson";
 	}
 	@GetMapping("/new")
@@ -53,7 +53,7 @@ public class PeopleController {
 	}
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable("id") int id, Model model) {
-		model.addAttribute("person",peopleService.finfOne(id));
+		model.addAttribute("person",peopleService.findOne(id));
 		return "people/editPerson";
 	}
 	@PostMapping()

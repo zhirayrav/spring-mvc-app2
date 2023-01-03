@@ -42,15 +42,17 @@ public class BooksService {
 	public void deleteById(int id) {
 		booksRepository.deleteById(id);
 	}
-	public List<Book> getBooksByPersonId(int id){
-		return booksRepository.findByPersonId(id);
+	public List<Book> getBooksByPersonId(Person person){
+		return booksRepository.findBooksByOwner(person);
 	}
 	public Optional<Person> getBookOwner(int bookId){
 		return booksRepository.findOwnerByBookId(bookId);
 	}
+	@Transactional
 	public void assign(int bookId,Person person) {
 		booksRepository.assign(bookId, person);
 	}
+	@Transactional
 	public void release(int bookId) {
 		booksRepository.release(bookId);
 	}
