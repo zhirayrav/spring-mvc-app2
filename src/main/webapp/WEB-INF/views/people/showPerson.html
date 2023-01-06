@@ -5,13 +5,19 @@
 <title>Person</title>
 </head>
 <body>
-	<p th:text="${person.getName() + ', ' + person.getAge()}"/>
+	
+		<p th:text="${person.getName() + ', ' + person.getAge()}"/>
 	<div th:if="${books.isEmpty()}">
 		<p>У этого человека нет ни одной книги</p>
 	</div>
 	<div th:if="${!books.isEmpty()}">
 		<table th:each="book : ${books}">
-			<tr th:text="${book.name + ', ' + book.author + ', ' + book.year}"> book</tr>
+			<tr>
+				<td>
+					<span th:text="${book.name + ', ' + book.author + ', ' + book.year}"
+					th:style="${book.isExpired()} ? 'color:red' : 'color:black'">book</span>
+				</td>
+			</tr>
 		</table>
 	</div>
 	<form th:method="get" th:action="@{/people/{id}/edit(id=${person.getId()})}">

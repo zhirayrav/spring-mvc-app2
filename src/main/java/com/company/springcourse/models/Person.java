@@ -1,5 +1,6 @@
 package com.company.springcourse.models;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -62,6 +65,7 @@ public class Person {
 	public void setBooks(List<Book> books) {
 		this.books = books;
 	}
+
 	
 	
 }

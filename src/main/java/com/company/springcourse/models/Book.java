@@ -1,5 +1,7 @@
 package com.company.springcourse.models;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -32,6 +37,11 @@ public class Book {
 	@ManyToOne
 	@JoinColumn(name = "person_id",referencedColumnName = "id")
 	private Person owner;
+	@Column(name = "data")
+//	@Temporal(TemporalType.TIME)
+	private LocalDateTime takenAt;
+	@Transient
+	private boolean expired; 
 	public Book() {}
 	public Book(int id,String name, String author, int year) {
 		super();
@@ -70,6 +80,18 @@ public class Book {
 	}
 	public void setOwner(Person owner) {
 		this.owner = owner;
+	}
+	public LocalDateTime getTakenAt() {
+		return takenAt;
+	}
+	public void setTakenAt(LocalDateTime takenAt) {
+		this.takenAt = takenAt;
+	}
+	public boolean isExpired() {
+		return expired;
+	}
+	public void setExpired(boolean expired) {
+		this.expired = expired;
 	}
 	
 	

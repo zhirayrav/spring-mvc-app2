@@ -7,13 +7,14 @@ import org.springframework.validation.Validator;
 
 import com.company.springcourse.dao.PersonDAO;
 import com.company.springcourse.models.Person;
+import com.company.springcourse.services.PeopleService;
 @Component
 public class PersonValidator implements Validator{
-	private final PersonDAO personDAO;
+	private final PeopleService peopleService;
 	
 	@Autowired
-	public PersonValidator(PersonDAO personDAO) {
-		this.personDAO = personDAO;
+	public PersonValidator(PeopleService peopleService) {
+		this.peopleService = peopleService;
 	}
 
 	@Override
@@ -24,7 +25,7 @@ public class PersonValidator implements Validator{
 	@Override
 	public void validate(Object o, Errors errors) {
 			Person person = (Person) o;
-			if(personDAO.getPersonByName(person.getName()).isPresent()) {
+			if(peopleService.getPersonByName(person.getName()).isPresent()) {
 				errors.rejectValue("name", "", "This name is already taken");
 			}
 		

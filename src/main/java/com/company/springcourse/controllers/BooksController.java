@@ -1,10 +1,13 @@
 package com.company.springcourse.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.company.springcourse.models.Book;
 import com.company.springcourse.models.Person;
@@ -34,16 +38,24 @@ public class BooksController {
 		this.peopleService = peopleService;
 	}
 	@GetMapping()
-	public String index(Model model){
-		model.addAttribute("list",booksService.findAll());
+	public String index(Model model,@RequestParam(value = "page",required = false) Integer page
+			,@RequestParam(value = "books_per_page",required = false)Integer booksPerPage
+			,@RequestParam(value = "sort_by_year",required = false) boolean sortByYear){
+		
+		if(page==null || booksPerPage==null)
+			model.addAttribute("list",booksService.findAll(sortByYear));
+		else  {
+			model.addAttribute("list",booksService.findAllWithPagination(page,booksPerPage,sortByYear));
+		}
+			
 		return "books/indexBook";
 	}
 	@GetMapping("/{id}")
 	public String show(@PathVariable("id") int id,Model model,@ModelAttribute("person") Person person) {
 		model.addAttribute("book",booksService.findOne(id));
-		Optional<Person> bookOwner = booksService.getBookOwner(id);
-		if(bookOwner.isPresent()) {
-			model.addAttribute("owner", bookOwner.get());
+		Person bookOwner = booksService.getBookOwner(id);
+		if(bookOwner != null) {
+			model.addAttribute("owner", bookOwner);
 		}else
 			model.addAttribute("people", peopleService.findAll());
 		return "books/showBook";
@@ -87,5 +99,16 @@ public class BooksController {
 		booksService.assign(bookId,selectedPerson);
 		return "redirect:/books/" + bookId;
 	}
+	
+	@PostMapping("/search")
+	public String search(@RequestParam("query") String query,Model model) {
+		List<Book> foundBooks = booksService.search(query);
+		model.addAttribute("foundBooks",foundBooks);
+		foundBooks=null;
+		return "books/indexBook";
+	}
+	
+		
+	
 
 }

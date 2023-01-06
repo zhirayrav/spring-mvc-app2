@@ -1,6 +1,8 @@
 package com.company.springcourse.services;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,9 @@ public class PeopleService {
 	public void update(int id,Person updatedPerson) {
 		updatedPerson.setId(id);
 		peopleRepository.save(updatedPerson);
+	}
+	public Optional<Person> getPersonByName(String name) {
+		return peopleRepository.findByName(name);
 	}
 	
 	

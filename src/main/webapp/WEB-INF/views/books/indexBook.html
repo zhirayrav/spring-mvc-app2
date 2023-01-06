@@ -11,5 +11,29 @@
 	<br/>
 	<hr/>
 	<a th:href="@{/books/new}">Добавить новую книгу</a>
+	<div th:if="${foundBooks}">
+			<div th:if="${foundBooks.isEmpty()}">
+				<p>Книг не найдено</p>
+			</div>
+		<div th:each="book : ${foundBooks}">
+			<a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getName() + ',' + book.getAuthor() + ', ' + book.getYear()}">user</a>
+				<div th:if="${book.getOwner() != null}">
+					<span> Кника сейчас у : </span> <span th:text="${book.getOwner().getName()}"></span>
+				</div>
+				<div th:if="${book.getOwner()==null}">
+					<span>Книга свободна</span>
+				</div>
+		</div>
+		<a href="/book/books">Список всех книг</a>
+	</div>
+	
+	<br/>
+	<hr/>
+	
+	<form th:method="post" th:action="@{/books/search/}">
+		<label for="query"> Search : </label>
+		<input type="text" th:id="query" th:name="query"/>
+		<input type="submit" value="search"/>
+	</form>
 </body>
 </html>
